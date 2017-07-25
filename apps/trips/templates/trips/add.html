@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Add Travel Plan</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/travels">Travel Buddy</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="/travels">View Travels</a></li>
+              <li class="active"><a href="/travels/add">Add New Trip</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="col-sm-offset-4 col-sm-4">
+            <div class="col-sm-offset-9">
+                <a href="/travels">Home </a> || <a href="/logout">Logout</a>
+            </div>
+            <div class="">
+                <form class="form-horizontal" action="/travels/process" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <h2>Add a Trip</h2>
+                    </div>
+                    <div class = "form-group">
+                        <b>Destination:</b> <input type="text" name="destination" class="form-control" placeholder="Enter your destination..."><br>
+                        <div>
+                          {% if messages %}
+                            {% for message in messages %}
+                              {% if 'destinationlength' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message }}
+                              </div>
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b>Description:</b> <input type="text" class="form-control" name="description" placeholder="A short sentence about your plans..."><br>
+                        <div>
+                          {% if messages %}
+                            {% for message in messages %}
+                              {% if 'descriptionlength' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                    </div>
+                    <div class = "form-group">
+                        <b>Trip Start Date:</b> <input type="date" name="start_date" value="" class="form-control"><br>
+                        <div>
+                          {% if messages %}
+                            {% for message in messages %}
+                              {% if 'startlength' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                              {% if 'paststart' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                              {% if 'dateerror' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                    </div>
+                    <div class = "form-group">
+                        <b>Trip End Date:</b> <input type="date" name="end_date" value="" class = "form-control"><br>
+                        <div>
+                          {% if messages %}
+                            {% for message in messages %}
+                              {% if 'endlength' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                              {% if 'pastend' in message.tags %}
+                              <div class="alert alert-danger alert-dismissable fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Required field:</strong> {{ message}}
+                              </div>
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="add" value="Add" class = "btn btn-info col-sm-offset-10">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

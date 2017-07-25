@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Buddy</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="">Travel Buddy</a>
+          </div>
+        </div>
+      </nav>
+    <div class = "col-sm-offset-4 col-sm-4">
+        <div class="text-center">
+            <h1 class="">Welcome to Travel Buddy!</h1>
+            <h2 class = "text-info"> ✈ </h2>
+            <p class="text-muted">Whether you're organizing your own trips or trying to join another, <i>Travel Buddy</i> is the resource for you. Come join hundreds of users and see how easy it can be to travel!</p>
+        </div>
+        <div class="">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if 'logout' in message.tags %}
+                        <div class="alert alert-danger alert-dismissable fade in">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                          <strong>Happy Travelling:</strong> {{ message }}
+                        </div>
+                    {% endif %}
+                    {% if 'login' in message.tags %}
+                        <div class="alert alert-danger alert-dismissable fade in">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                          <strong>Request Denied:</strong> {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+     <div class="form-horizontal">
+        <h2>Login</h2>
+        <p class="text-muted">Welcome back, traveller!</p>
+        <form class="" action="/login" method="post">
+          {% csrf_token %}
+          Email: <input class = "form-control" type="text" name="email" placeholder="Registered email here..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'no_email' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'email_valid' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'email_exist' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          Password: <input class = "form-control" type="password" name="password" placeholder="Password here..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'no_pass' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'short_pass' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <input class = "btn btn-info col-sm-offset-10" type="submit" name="Login" value = "Login">
+        </form>
+      </div>
+      <div class="form-horizontal">
+        <h2>Register</h2>
+        <p class="text-muted">New around here? Welcome aboard!</p>
+        <form class="" action="/register" method="post">
+          {% csrf_token %}
+          First Name: <input class = "form-control" type="text" name="fname" placeholder="First name here..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'fnamelen' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'fnamevalid' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          Last Name: <input class = "form-control" type="text" name="lname" placeholder="Last name here..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'lnamelen' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'lnamevalid' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          Email: <input class = "form-control" type="text" name="email" placeholder="Email here..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'emaillen' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'emailvalid' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+                {% if 'emailtaken' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          Password: <input class = "form-control" type="password" name="password" placeholder="Password must be at least 8 characters..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'passlen' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{message}}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          Confirm Password: <input class = "form-control" type="password" name="conpass" placeholder="Please reconfirm the above password..."><br>
+          <div>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'passconpass' in message.tags %}
+                <div class="alert alert-danger alert-dismissable fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Required field:</strong> {{ message }}
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <input class = "btn btn-info col-sm-offset-10" type="submit" name="Register" value = "Register">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

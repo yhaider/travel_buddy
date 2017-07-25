@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Travel Dashboard</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body >
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/travels">Travel Buddy</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/travels">View Travels</a></li>
+              <li><a href="/travels/add">Add New Trip</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="col-sm-offset-3 col-sm-7">
+            <div class="">
+                <a href="/logout" class = "col-sm-offset-11">Logout</a>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if 'newcomer' in message.tags %}
+                        <div class="alert alert-success alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Success!</strong> {{ message }}
+                        </div>
+                        {% endif%}
+                    {% endfor %}
+                {% endif %}
+                <h2>Welcome, {{ request.session.name }}!</h2>
+            </div>
+            <div class="">
+                <h4>Your Trip Schedules</h4>
+                <table class = "table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan</th>
+                        <th>Do You Want to Leave?</th>
+                    </tr>
+                    {% if trips %}
+                        {% for trip in trips %}
+                        <tr>
+                            <td><a href="/travels/destination/{{trip.id }}">{{ trip.destination }}</a></td>
+                            <td>{{ trip.start_date|date:"M d, Y" }}</td>
+                            <td>{{ trip.end_date|date:"M d, Y" }}</td>
+                            <td>{{ trip.description }}</td>
+                            <td><a href="/travels/leave/{{ trip.id }}">Leave</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+            <div class="">
+                <h4>Other Users' Travel Plans</h4>
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Traveler</th>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Do You Want to Join?</th>
+                    </tr>
+                    {% if all_trips %}
+                        {% for trip in all_trips %}
+                            <tr>
+                                <td>{{ trip.users.first.first_name }} {{ trip.users.first.last_name }}</td>
+                                <td><a href="/travels/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+                                <td>{{ trip.start_date|date:"M d, Y" }}</td>
+                                <td>{{ trip.end_date|date:"M d, Y" }}</td>
+                                <td><a href="/travels/join/{{ trip.id }}">Join</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+            <div class="">
+                <a href="/travels/add"><button type="button" class = "btn btn-info col-sm-offset-9" name="button">Add a Travel Plan</button></a>
+            </div>
+        </div>
+    </body>
+</html>
