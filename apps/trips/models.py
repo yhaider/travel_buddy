@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from django.db import models
 from ..users.models import User, UserManager
+# Here I import the models from the users app to use them
+# as a foreign key in the Trip class
 from datetime import datetime
 import bcrypt
 import re
@@ -23,7 +25,10 @@ class TripManager(models.Manager):
         if postData['start_date'] > postData['end_date']:
             errors['dateerror'] = "Start date must be before the end date."
         return errors
-
+    # This validator function manages the trip class when we are adding
+    # a new trip into the database
+    # We can later retrieve these errors should any of them be triggered
+    # to then display them
 
 class Trip(models.Model):
     destination = models.CharField(max_length = 255)
@@ -34,3 +39,7 @@ class Trip(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     users = models.ManyToManyField(User, related_name = "trips")
     objects = TripManager()
+    # This is the individual trip class
+    # It has a foreign key directing to the User class
+    # which exists in the user app
+    # I reach that by importing it at the top

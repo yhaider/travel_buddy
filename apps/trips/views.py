@@ -12,12 +12,21 @@ def home(request):
         'all_trips': Trip.objects.exclude(users = request.session['user_id'])
     }
     return render(request, 'trips/travels.html', context)
+    # Displays all trips and separates them into two tables
+    # depending on if the user is on the trip or not
+    # Also does not allow anyone to proceed to the route
+    # unless they have logged in
+
 
 def add(request):
     if not 'user_id' in request.session:
         messages.add_message(request, messages.INFO, "You need to log in or register first.", extra_tags = 'login')
         return redirect('/')
     return render(request,'trips/add.html')
+    # Simply renders the page for adding a trip
+    # Also does not allow anyone to proceed to the route
+    # unless they have logged in
+
 
 def process(request):
     errors = Trip.objects.validator(request.POST)
@@ -33,6 +42,12 @@ def process(request):
         trip.users.add(u)
         trip.save()
         return redirect('/travels')
+    # If form data does not pass validations as
+    # described in models.py for trips app
+    # then user is shown errors
+    # Otherwise, the trip is created and added
+    # to the user's table which is displayed when it redirects
+
 
 def destination(request, number):
     if not 'user_id' in request.session:
@@ -48,6 +63,11 @@ def destination(request, number):
         'all_users': trip.users.all()
     }
     return render(request, 'trips/destination.html', context)
+    # Displays the information for the trip
+    # with the number as its ID
+    # Also does not allow anyone to proceed to the route
+    # unless they have logged in
+
 
 def join(request, number):
     trip = Trip.objects.get(id=number)
@@ -56,6 +76,10 @@ def join(request, number):
     newuser.save()
     trip.users.add(newuser)
     return redirect('/travels')
+    # Adds a user to the trip with an id that is the same number passed
+    # in the url and shows that trip under that user's schedule tables
+    # now instead
+
 
 def leave(request, number):
     trip = Trip.objects.get(id=number)
@@ -65,3 +89,7 @@ def leave(request, number):
     if not trip.users.all():
         trip.delete()
     return redirect('/travels')
+    # Removes a user from the trip with the id that is the same as the
+    # number passed into the url and then redirects to the schedule page
+    # to now display the trip under other user's trips OR it deletes the
+    # trip if there are no other users going on it

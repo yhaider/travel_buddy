@@ -43,3 +43,5 @@ def logout(request):
     request.session.clear()
     messages.add_message(request, messages.INFO, "You have been logged out.", extra_tags='logout')
     return redirect('/')
+    # Logs the user out by clearing the session and redirecting to the login page
+    # Also displays a dismissable alert that the user has logged out
